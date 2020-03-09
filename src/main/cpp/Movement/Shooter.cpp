@@ -24,7 +24,7 @@ void Shooter::InitPID(){
     m_pidController2->SetD(kD);
     m_pidController2->SetIZone(kIz);
     m_pidController2->SetFF(kFF);
-    m_pidController2->SetOutputRange(kMinOutput, kMaxOutput);
+    m_pidController2->SetOutputRange(kMinOutput, kMaxOutput);\
 
     // display PID coefficients on SmartDashboard
     frc::SmartDashboard::PutNumber("P Gain", kP);
@@ -69,7 +69,7 @@ void Shooter::RunPID()
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){
-        SetPoint = 4900;
+        SetPoint = 5400;
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else{
