@@ -28,7 +28,10 @@ void Robot::AutonomousInit()     {
 }
 void Robot::AutonomousPeriodic() { 
     automovement->TestDrive();
+<<<<<<< HEAD
     
+=======
+>>>>>>> d95ef063e80f440c8085a889c9b5b289f92aaca0
 }
 
 void Robot::TeleopInit(){
