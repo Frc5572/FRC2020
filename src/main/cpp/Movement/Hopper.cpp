@@ -26,7 +26,7 @@ void Hopper::Advance(){
       
       if( !( limitSwitch3->Get() ) ){ 
          if(Operator->X() ){
-            belt->Set(.2);
+            belt->Set(.20);
             }
       }
       if(limitSwitch3->Get()){

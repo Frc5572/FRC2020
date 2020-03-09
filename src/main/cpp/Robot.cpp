@@ -16,20 +16,11 @@
 
 void Robot::RobotInit(){
     m_timer.Start();
+    
 }
 
 void Robot::RobotPeriodic(){ 
-    LimeLight.Update();
-
-    //driveTrain.Aim();
-
-    driveTrain.Drive();
-
-    shooter.Shots();
-    
-    climber.ClimbPeriodic();
-
-    hopper.HopperPeriodic();
+   
 }
 
 void Robot::AutonomousInit()     {
@@ -40,12 +31,25 @@ void Robot::AutonomousPeriodic() {
 }
 
 void Robot::TeleopInit(){
-    
+    //shooter.InitPID();
 }
 
 void Robot::TeleopPeriodic(){
+     LimeLight.Update();
 
+    //driveTrain.Aim();
+
+    //shooter.RunPID();
+
+    driveTrain.Drive();
+
+    shooter.Shots();
+    
+    climber.ClimbPeriodic();
+
+    hopper.HopperPeriodic();
 }
+
 
 void Robot::TestInit(){
     
