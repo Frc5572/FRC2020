@@ -33,64 +33,10 @@ void Robot::RobotPeriodic(){
 }
 
 void Robot::AutonomousInit()     {
-    m_timer.Reset();
-    m_timer.Start();
+    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *driveTrain.MiddleLeftMotorEncoder, *driveTrain.BottomRightMotorEncoder};
 }
-
 void Robot::AutonomousPeriodic() { 
-    while(m_timer.Get() < 2){
-        m_leftShooter.Set(.88);
-        m_rightShooter.Set(.88);
-    }
-    while(m_timer.Get() < 10 && m_timer.Get() > 2){
-        shooterHood.Set(frc::DoubleSolenoid::Value::kForward);
-        //intake.Set(frc::DoubleSolenoid::Value::kForward);
-        m_leftShooter.Set(.88);
-        m_rightShooter.Set(.88);
-        m_hopper.Set(.3);
-        continue;
-    }
-    while(m_timer.Get() > 10 && m_timer.Get() < 11){
-        //intake.Set(frc::DoubleSolenoid::Value::kReverse);
-        shooterHood.Set(frc::DoubleSolenoid::Value::kReverse);
-        m_leftShooter.Set(0);
-        m_rightShooter.Set(0);
-        m_hopper.Set(0.0);
-        continue;
-    }
-
-    while(m_timer.Get() > 11 && m_timer.Get() < 12){
-        m_rightBottomMotor.Set(.3);
-        m_rightMiddleMotor.Set(.3);
-
-        m_leftBottomMotor.Set(-.3);
-        m_leftMiddleMotor.Set(-.3);
-        continue;
-    }
-    
-    // while(m_timer.Get() < 1.3){
-    //     m_rightBottomMotor.Set(-.3);
-    //     m_rightMiddleMotor.Set(-.3);
-
-    //     m_leftBottomMotor.Set(.3);
-    //     m_leftMiddleMotor.Set(.3);
-    //     continue;
-    // }
-
-    // while(m_timer.Get() > 2 && m_timer.Get() < 4){
-    //     m_leftShooter.Set(.68);
-    //     m_rightShooter.Set(.68);
-    //     continue;
-    // }
-
-    // while(m_timer.Get() > 4 && m_timer.Get() < 13){
-    //     m_hopper.Set(.2);
-    //     m_leftShooter.Set(.68);
-    //     m_rightShooter.Set(.68);
-    //     continue;
-    // }
-
-    
+    automovement->TestDrive();
 }
 
 void Robot::TeleopInit(){

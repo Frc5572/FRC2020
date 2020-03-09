@@ -1,4 +1,5 @@
 #include "Auto/Auto.h"
+#include <frc/Timer.h>
 
 AutoMovement::AutoMovement(frc::SpeedControllerGroup &leftMotors, frc::SpeedControllerGroup &rightMotors, AHRS &gyro, rev::CANEncoder &anyleftencoder, rev::CANEncoder &anyrightencoder)
 {
@@ -64,7 +65,9 @@ wheel_circumference = .47877887204060999;
 
 void AutoMovement::TestDrive()
 {
-    while (true)
+    frc::Timer timer;
+    timer.Start();
+    while (timer.Get() < 15)
     {
     EncoderConfig leftconfig = { leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
     EncoderConfig rightconfig = { rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
@@ -87,5 +90,6 @@ void AutoMovement::TestDrive()
     std::cout << "r is: " << r << std::endl;
     leftMotors->Set(l + turn);
     rightMotors->Set(r - turn);
+    continue;
     }
 }
