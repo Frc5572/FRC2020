@@ -28,11 +28,11 @@ void Robot::AutonomousInit()     {
 }
 void Robot::AutonomousPeriodic() { 
     automovement->TestDrive();
-    //
+    
 }
 
 void Robot::TeleopInit(){
-    //shooter.InitPID();
+    shooter.InitPID();
 }
 
 void Robot::TeleopPeriodic(){
@@ -40,7 +40,7 @@ void Robot::TeleopPeriodic(){
 
     //driveTrain.Aim();
 
-    //shooter.RunPID();
+    shooter.RunPID();
 
     driveTrain.Drive();
 

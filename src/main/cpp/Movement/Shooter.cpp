@@ -9,6 +9,8 @@ void Shooter::InitPID(){
     leftMotor->RestoreFactoryDefaults();
     rightMotor->RestoreFactoryDefaults();
     
+    rightMotor->SetInverted(true);
+
     // set PID coefficients
     m_pidController->SetP(kP);
     m_pidController->SetI(kI);
