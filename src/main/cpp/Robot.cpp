@@ -16,30 +16,12 @@
 
 void Robot::RobotInit(){
     m_timer.Start();
-    
 }
 
 void Robot::RobotPeriodic(){ 
-   
-}
-
-void Robot::AutonomousInit()     {
-    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *driveTrain.MiddleLeftMotorEncoder, *driveTrain.BottomRightMotorEncoder};
-}
-void Robot::AutonomousPeriodic() { 
-    automovement->TestDrive();
-}
-
-void Robot::TeleopInit(){
-    //shooter.InitPID();
-}
-
-void Robot::TeleopPeriodic(){
-     LimeLight.Update();
+    LimeLight.Update();
 
     //driveTrain.Aim();
-
-    //shooter.RunPID();
 
     driveTrain.Drive();
 
@@ -50,6 +32,20 @@ void Robot::TeleopPeriodic(){
     hopper.HopperPeriodic();
 }
 
+void Robot::AutonomousInit()     {
+    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *driveTrain.MiddleLeftMotorEncoder, *driveTrain.BottomRightMotorEncoder};
+}
+void Robot::AutonomousPeriodic() { 
+    automovement->TestDrive();
+}
+
+void Robot::TeleopInit(){
+    
+}
+
+void Robot::TeleopPeriodic(){
+
+}
 
 void Robot::TestInit(){
     
