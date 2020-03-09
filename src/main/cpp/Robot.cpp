@@ -15,8 +15,8 @@
 #include <frc/Timer.h>
 
 void Robot::RobotInit(){
+   
     m_timer.Start();
-    
 }
 
 void Robot::RobotPeriodic(){ 
@@ -24,14 +24,17 @@ void Robot::RobotPeriodic(){
 }
 
 void Robot::AutonomousInit()     {
-    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *driveTrain.MiddleLeftMotorEncoder, *driveTrain.BottomRightMotorEncoder};
+     m_timer.Reset();
+     m_timer.Start();
+
+    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *BottomLeftMotorEncoder, *BottomRightMotorEncoder};
 }
 void Robot::AutonomousPeriodic() { 
+    while (m_timer.Get() < 15)
+    {
     automovement->TestDrive();
-<<<<<<< HEAD
-    
-=======
->>>>>>> d95ef063e80f440c8085a889c9b5b289f92aaca0
+    continue;
+    }
 }
 
 void Robot::TeleopInit(){

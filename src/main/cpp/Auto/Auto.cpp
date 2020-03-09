@@ -1,5 +1,6 @@
 #include "Auto/Auto.h"
 #include <frc/Timer.h>
+#include <iostream>
 
 AutoMovement::AutoMovement(frc::SpeedControllerGroup &leftMotors, frc::SpeedControllerGroup &rightMotors, AHRS &gyro, rev::CANEncoder &anyleftencoder, rev::CANEncoder &anyrightencoder)
 {
@@ -12,9 +13,9 @@ Waypoint p3 = {  1, 1, d2r(45) };             // Waypoint @ x= 2, y= 4, exit ang
 points[0] = p1;
 points[1] = p2;
 points[2] = p3;
-
+std::cout << "line 16" << std::endl;
 TrajectoryCandidate candidate;
-
+std::cout << "line 18" << std::endl;
 // Prepare the Trajectory for Generation.
 //
 // Arguments: 
@@ -27,15 +28,15 @@ TrajectoryCandidate candidate;
 // Max Acceleration:    10 m/s/s
 // Max Jerk:            60 m/s/s/s
 pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.05, 1.5, 9.0, 10.0, &candidate);
-
+std::cout << "line 31" << std::endl;
 length = candidate.length;
 
 // Array of Segments (the trajectory points) to store the trajectory in
 Segment *trajectory = new Segment[length];
-
+std::cout << "line 36" << std::endl;
 // Generate the trajectory
 pathfinder_generate(&candidate, trajectory);
-
+std::cout << "line 39" << std::endl;
 Segment *leftTrajectory = new Segment[length];
 Segment *rightTrajectory = new Segment[length];
 
@@ -45,11 +46,11 @@ double wheelbase_width = 0.559;
 // Generate the Left and Right trajectories of the wheelbase using the 
 // originally generated trajectory
 pathfinder_modify_tank(trajectory, length, leftTrajectory, rightTrajectory, wheelbase_width);
+std::cout << "line 49" << std::endl;
 
-
-leftfollower->last_error = 0; leftfollower->segment = 0; leftfollower->finished = 0;     // Just in case!
-rightfollower->last_error = 0; rightfollower->segment = 0; rightfollower->finished = 0;     // Just in case!
-
+// leftfollower->last_error = 0; leftfollower->segment = 0; leftfollower->finished = 0;     // Just in case!
+// rightfollower->last_error = 0; rightfollower->segment = 0; rightfollower->finished = 0;     // Just in case!
+std::cout << "line 53" << std::endl;
 
 this->leftMotors = &leftMotors;
 this->rightMotors = &rightMotors;
@@ -57,41 +58,51 @@ this->gyro = &gyro;
 this->leftencoder = &anyleftencoder;
 this->rightencoder = &anyrightencoder;
 AutoMovement::gyro->ZeroYaw();
-leftencoder->SetPositionConversionFactor(42);
-rightencoder->SetPositionConversionFactor(42);
+
 max_velocity = 1.5;
 wheel_circumference = .47877887204060999;
+std::cout << "line 65" << std::endl;
 }
 
 void AutoMovement::TestDrive()
 {
-    frc::Timer timer;
-    timer.Start();
-    while (timer.Get() < 15)
+    frc::Timer m_timer;
+    m_timer.Start();
+    l = 0; r = 0;
+    leftencoder->SetPositionConversionFactor(42);
+    rightencoder->SetPositionConversionFactor(42);
+    leftencoder->SetPosition(0);
+    rightencoder->SetPosition(0);
+    std::cout << "l0 is: " << l << std::endl;
+    std::cout << "r is: " << r << std::endl;
+    std::cout << "44 " << leftencoder->GetPosition() << std::endl;
+    std::cout << "44 " << rightencoder->GetPosition() << std::endl;
+    EncoderConfig leftconfig = { (int)leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    EncoderConfig rightconfig = { (int)rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    while (true){
+    l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
+    r = pathfinder_follow_encoder(rightconfig, rightfollower, &rightTrajectory, length, rightencoder->GetPosition());
+    std::cout << "l1 is: " << l << std::endl;
+    std::cout << "r is: " << r << std::endl;
+    angle = gyro->GetAngle();
+    double desired_heading = leftfollower->heading;
+    double differeince_angle = desired_heading - angle;
+    std::cout << "l2 is: " << l << std::endl;
+    std::cout << "r is: " << r << std::endl;
+    differeince_angle = std::fmod(differeince_angle, 360.0);
+    if (std::abs(differeince_angle) > 180.0) 
     {
-    // EncoderConfig leftconfig = { leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
-    // EncoderConfig rightconfig = { rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
+        differeince_angle = (differeince_angle > 0) ? differeince_angle - 360 : differeince_angle + 360;
+    } 
 
-    // l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
-    // r = pathfinder_follow_encoder(rightconfig, rightfollower, &rightTrajectory, length, rightencoder->GetPosition());
-
-    // angle = gyro->GetAngle();
-    // double desired_heading = leftfollower->heading;
-    // double differeince_angle = desired_heading - angle;
-
-    // differeince_angle = std::fmod(differeince_angle, 360.0);
-    // if (std::abs(differeince_angle) > 180.0) 
-    // {
-    //     differeince_angle = (differeince_angle > 0) ? differeince_angle - 360 : differeince_angle + 360;
-    // } 
-
-    // double turn = 0.8 * (-1.0/80.0) * differeince_angle;
-    // std::cout << "l is: " << l << std::endl;
-    // std::cout << "r is: " << r << std::endl;
-    // leftMotors->Set(l + turn);
-    // rightMotors->Set(r - turn);
-    leftMotors->Set(.1);
-    rightMotors->Set(.1);
-    continue;
+    double turn = 0.8 * (-1.0/80.0) * differeince_angle;
+    std::cout << "l3 is: " << l << std::endl;
+    std::cout << "r is: " << r << std::endl;
+    leftMotors->Set((l + turn));
+    rightMotors->Set(-(r - turn));
+    if (m_timer.Get() > 15)
+    {
+        break;
+    }
     }
 }
