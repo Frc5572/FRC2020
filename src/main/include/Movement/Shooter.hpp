@@ -22,9 +22,10 @@ class Shooter{
     void Calucate();
     void TestRPM();
     void Test();
-    void ResetPID(bool);
 
-    bool SetPID(int);
+    void RunPID();
+    void InitPID();
+
 
     void Shots();
 
@@ -43,6 +44,10 @@ class Shooter{
     // Initiation line = %- RPM - 
     // Trench = %- RPM - 
     // Color Wheel = %- RMP - 
+
+    rev::CANPIDController *m_pidController ;
+    rev::CANPIDController *m_pidController2 ;
+
     frc::SpeedControllerGroup* shooterMotors;
     
     FRC5572Controller* Operator;
