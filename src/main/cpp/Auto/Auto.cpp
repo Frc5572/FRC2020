@@ -1,9 +1,10 @@
 #include "Auto/Auto.h"
+#include <frc/Timer.h>
 
 AutoMovement::AutoMovement(frc::SpeedControllerGroup &leftMotors, frc::SpeedControllerGroup &rightMotors, AHRS &gyro, rev::CANEncoder &anyleftencoder, rev::CANEncoder &anyrightencoder)
 {
 POINT_LENGTH = 3;
-Waypoint points[POINT_LENGTH];
+Waypoint *points = new Waypoint[POINT_LENGTH];
 
 Waypoint p1 = { 0, 0, d2r(45) };      // Waypoint @ x=-4, y=-1, exit angle=45 degrees
 Waypoint p2 = { .5, .5, d2r(45) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
@@ -25,7 +26,7 @@ TrajectoryCandidate candidate;
 // Max Velocity:        15 m/s
 // Max Acceleration:    10 m/s/s
 // Max Jerk:            60 m/s/s/s
-pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.05, 2.0, 9.0, 10.0, &candidate);
+pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.05, 1.5, 9.0, 20.0, &candidate);
 
 length = candidate.length;
 
@@ -35,8 +36,8 @@ Segment *trajectory = new Segment[length];
 // Generate the trajectory
 pathfinder_generate(&candidate, trajectory);
 
-Segment leftTrajectory[length];
-Segment rightTrajectory[length];
+Segment *leftTrajectory = new Segment[length];
+Segment *rightTrajectory = new Segment[length];
 
 // The distance between the left and right sides of the wheelbase is 0.6m
 double wheelbase_width = 0.559;
@@ -58,19 +59,18 @@ this->rightencoder = &anyrightencoder;
 AutoMovement::gyro->ZeroYaw();
 leftencoder->SetPositionConversionFactor(42);
 rightencoder->SetPositionConversionFactor(42);
-max_velocity = 2.0;
+max_velocity = 1.5;
 wheel_circumference = .47877887204060999;
 }
 
 void AutoMovement::TestDrive()
 {
     frc::Timer timer;
-    timer.Reset();
     timer.Start();
-    while (timer.Get() > 4)
+    while (timer.Get() < 15)
     {
-    EncoderConfig leftconfig = { leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
-    EncoderConfig rightconfig = { rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    EncoderConfig leftconfig = { leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
+    EncoderConfig rightconfig = { rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
 
     l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
     r = pathfinder_follow_encoder(rightconfig, rightfollower, &rightTrajectory, length, rightencoder->GetPosition());

@@ -1,7 +1,14 @@
 #include "rev/CANSparkMAX.h"
 #include <frc/SpeedControllerGroup.h>
 #include "AHRS.h"
-#include "Auto/pathfinder.h"
+#include "pathfinder.h"
+// #include "pathfinder/structs.h"
+// #include "pathfinder/followers/encoder.h"
+// #include "pathfinder/trajectory.h"
+// #include "pathfinder/modifiers/tank.h"
+// #include "pathfinder/fit.h"
+// #include "pathfinder/mathutil.h"
+// #include "pathfinder/spline.h"
 
 class AutoMovement{
     public:
