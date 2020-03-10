@@ -47,8 +47,8 @@ double wheelbase_width = 0.559;
 pathfinder_modify_tank(trajectory, length, leftTrajectory, rightTrajectory, wheelbase_width);
 
 
-leftfollower->last_error = 0; leftfollower->segment = 0; leftfollower->finished = 0;     // Just in case!
-rightfollower->last_error = 0; rightfollower->segment = 0; rightfollower->finished = 0;     // Just in case!
+// leftfollower->last_error = 0; leftfollower->segment = 0; leftfollower->finished = 0;     // Just in case!
+// rightfollower->last_error = 0; rightfollower->segment = 0; rightfollower->finished = 0;     // Just in case!
 
 
 this->leftMotors = &leftMotors;
@@ -57,8 +57,6 @@ this->gyro = &gyro;
 this->leftencoder = &anyleftencoder;
 this->rightencoder = &anyrightencoder;
 AutoMovement::gyro->ZeroYaw();
-leftencoder->SetPositionConversionFactor(42);
-rightencoder->SetPositionConversionFactor(42);
 max_velocity = 1.5;
 wheel_circumference = .47877887204060999;
 }
@@ -69,8 +67,8 @@ void AutoMovement::TestDrive()
     timer.Start();
     while (timer.Get() < 15)
     {
-    EncoderConfig leftconfig = { leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
-    EncoderConfig rightconfig = { rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.2, 1.0 / max_velocity, 0.0};  
+    EncoderConfig leftconfig = { leftencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    EncoderConfig rightconfig = { rightencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
 
     l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
     r = pathfinder_follow_encoder(rightconfig, rightfollower, &rightTrajectory, length, rightencoder->GetPosition());

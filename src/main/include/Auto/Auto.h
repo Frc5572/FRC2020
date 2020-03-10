@@ -1,3 +1,5 @@
+#ifndef PATHFINDER_AUTO_H
+#define PATHFINDER_AUTH_H
 #include "rev/CANSparkMAX.h"
 #include <frc/SpeedControllerGroup.h>
 #include "AHRS.h"
@@ -21,3 +23,4 @@ class AutoMovement{
     double encoder_position, wheel_circumference, max_velocity, l, r, angle;
     int l_encoder_value, r_encoder_value, POINT_LENGTH, length;
 };
+#endif
