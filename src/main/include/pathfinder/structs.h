@@ -1,7 +1,6 @@
 #ifndef PATHFINDER_STRUCT_H_DEF
 #define PATHFINDER_STRUCT_H_DEF
 
-
  typedef struct {
     double x, y, angle;
 } Waypoint;

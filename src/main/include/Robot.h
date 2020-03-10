@@ -33,7 +33,7 @@ class Robot : public frc::TimedRobot
  private:
 
  AutoMovement *automovement;
- 
+
  // Controllers
   FRC5572Controller Driver{0}; 
   FRC5572Controller Operator{1};
@@ -43,7 +43,7 @@ class Robot : public frc::TimedRobot
 
   /* DriveTrain Spark Max and Motors*/
   rev::CANSparkMax m_leftTopMotor{TopLeft, 
-    rev::CANSparkMax::MotorType::kBrushless};
+        rev::CANSparkMax::MotorType::kBrushless};  
 
   rev::CANSparkMax m_rightTopMotor{TopRight, 
     rev::CANSparkMax::MotorType::kBrushless};
@@ -60,6 +60,8 @@ class Robot : public frc::TimedRobot
   rev::CANSparkMax m_rightBottomMotor{RightBot, 
     rev::CANSparkMax::MotorType::kBrushless};
 
+        rev::CANEncoder* BottomLeftMotorEncoder = new rev::CANEncoder{m_leftBottomMotor};
+        rev::CANEncoder* BottomRightMotorEncoder = new rev::CANEncoder{m_rightMiddleMotor};
  /* Shooters Spark Max and Motors*/
   rev::CANSparkMax m_leftShooter{LeftShoot, 
     rev::CANSparkMax::MotorType::kBrushless};

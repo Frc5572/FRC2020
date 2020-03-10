@@ -15,6 +15,7 @@
 #include <frc/Timer.h>
 
 void Robot::RobotInit(){
+   
     m_timer.Start();
 }
 
@@ -33,18 +34,36 @@ void Robot::RobotPeriodic(){
 }
 
 void Robot::AutonomousInit()     {
-    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *driveTrain.MiddleLeftMotorEncoder, *driveTrain.BottomRightMotorEncoder};
+     m_timer.Reset();
+     m_timer.Start();
+
+    automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *BottomLeftMotorEncoder, *BottomRightMotorEncoder};
 }
 void Robot::AutonomousPeriodic() { 
+    while (m_timer.Get() < 15)
+    {
     automovement->TestDrive();
+    continue;
+    }
 }
 
 void Robot::TeleopInit(){
-    
+    shooter.InitPID();
 }
 
 void Robot::TeleopPeriodic(){
 
+    //driveTrain.Aim();
+
+    shooter.RunPID();
+
+    driveTrain.Drive();
+
+    shooter.Shots();
+    
+    climber.ClimbPeriodic();
+
+    hopper.HopperPeriodic();
 }
 
 void Robot::TestInit(){

@@ -14,7 +14,7 @@ double pathfinder_follow_encoder(EncoderConfig c, EncoderFollower *follower, Seg
 }
 
 double pathfinder_follow_encoder2(EncoderConfig c, EncoderFollower *follower, Segment s, int trajectory_length, double encoder_tick) {
-    double distance_covered = (encoder_tick - c.initial_position) /  (c.ticks_per_revolution);
+    double distance_covered = ((encoder_tick - c.initial_position) /  c.ticks_per_revolution);
     distance_covered = distance_covered * c.wheel_circumference;
     
     if (follower->segment < trajectory_length) {
