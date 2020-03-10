@@ -23,6 +23,8 @@ class Shooter{
     void TestRPM();
     void Test();
     void ResetPID(bool);
+    void InitPID();
+    void RunPID();
 
     bool SetPID(int);
 
@@ -33,7 +35,7 @@ class Shooter{
     // void TrenchShot();
 
     bool Tracked = true, hood = false;
-    double Power = 0, Distance = 0, rpm = 0, leftRPM = 0, rightRPM = 0;
+    double Power = 0, Distance = 0, rpm = 0, leftRPM = 0, rightRPM = 0, SetPoint = 0;
 
     // PID coefficients
     double kP = 0.1, kI = 1e-4, kD = 1, kIz = 0, kFF = 0, kMaxOutput = 1, kMinOutput = 0;
@@ -43,6 +45,9 @@ class Shooter{
     // Initiation line = %- RPM - 
     // Trench = %- RPM - 
     // Color Wheel = %- RMP - 
+    // Color Wheel = %- RMP - 
+    rev::CANPIDController *m_pidController;
+    rev::CANPIDController *m_pidController2;
     frc::SpeedControllerGroup* shooterMotors;
     
     FRC5572Controller* Operator;
