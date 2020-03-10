@@ -14,7 +14,7 @@ points[1] = p2;
 points[2] = p3;
 
 TrajectoryCandidate candidate;
-//work
+
 // Prepare the Trajectory for Generation.
 //
 // Arguments: 
