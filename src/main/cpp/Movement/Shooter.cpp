@@ -72,6 +72,11 @@ void Shooter::RunPID()
         SetPoint = 3500;
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
+    else if (Operator->POV() == 180)
+    {
+        SetPoint = 4000;
+        Hood->Set(frc::DoubleSolenoid::Value::kForward);
+    }
     else{
         SetPoint = 0;
         Hood->Set(frc::DoubleSolenoid::Value::kReverse); 
@@ -178,6 +183,11 @@ void Shooter::Shots(){
     else if(this->Operator->POV() == 270){
         shooterMotors->Set(.70); //small adjustment from .92 to .94
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
+    }
+    else if (Operator->POV() == 180)
+    {
+        shooterMotors->Set(.78);
+        Hood->Set(frc::DoubleSolenoid::Value::kForward);
     }
     else{
         shooterMotors->Set(0.0);
