@@ -6,9 +6,9 @@ AutoMovement::AutoMovement(frc::SpeedControllerGroup &leftMotors, frc::SpeedCont
 POINT_LENGTH = 3;
 Waypoint *points = new Waypoint[POINT_LENGTH];
 
-Waypoint p1 = { 0, 0, d2r(45) };      // Waypoint @ x=-4, y=-1, exit angle=45 degrees
-Waypoint p2 = { .5, .5, d2r(45) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
-Waypoint p3 = {  1, 1, d2r(45) };             // Waypoint @ x= 2, y= 4, exit angle= 0 radians
+Waypoint p1 = { 0, 0, d2r(0) };      // Waypoint @ x=-4, y=-1, exit angle=45 degrees
+Waypoint p2 = { .5, .5, d2r(0) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
+Waypoint p3 = {  1, 1, d2r(0) };             // Waypoint @ x= 2, y= 4, exit angle= 0 radians
 points[0] = p1;
 points[1] = p2;
 points[2] = p3;
