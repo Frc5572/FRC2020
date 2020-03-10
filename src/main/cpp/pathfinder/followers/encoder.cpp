@@ -1,6 +1,6 @@
 #include "pathfinder.h"
 
-double pathfinder_follow_encoder(EncoderConfig c, EncoderFollower *follower, Segment *trajectory, int trajectory_length, int encoder_tick) {
+double pathfinder_follow_encoder(EncoderConfig c, EncoderFollower *follower, Segment *trajectory, int trajectory_length, double encoder_tick) {
     int segment = follower->segment;
     if (segment >= trajectory_length) {
         follower->finished = 1;
@@ -13,8 +13,8 @@ double pathfinder_follow_encoder(EncoderConfig c, EncoderFollower *follower, Seg
     }
 }
 
-double pathfinder_follow_encoder2(EncoderConfig c, EncoderFollower *follower, Segment s, int trajectory_length, int encoder_tick) {
-    double distance_covered = ((double)encoder_tick - (double)c.initial_position) /  ((double)c.ticks_per_revolution);
+double pathfinder_follow_encoder2(EncoderConfig c, EncoderFollower *follower, Segment s, int trajectory_length, double encoder_tick) {
+    double distance_covered = ((encoder_tick - c.initial_position) /  c.ticks_per_revolution);
     distance_covered = distance_covered * c.wheel_circumference;
     
     if (follower->segment < trajectory_length) {

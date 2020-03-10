@@ -7,9 +7,9 @@ AutoMovement::AutoMovement(frc::SpeedControllerGroup &leftMotors, frc::SpeedCont
 POINT_LENGTH = 3;
 Waypoint *points = new Waypoint[POINT_LENGTH];
 
-Waypoint p1 = { 0, 0, d2r(45) };      // Waypoint @ x=-4, y=-1, exit angle=45 degrees
-Waypoint p2 = { .5, .5, d2r(45) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
-Waypoint p3 = {  1, 1, d2r(45) };             // Waypoint @ x= 2, y= 4, exit angle= 0 radians
+Waypoint p1 = { 0, 0, d2r(0) };      // Waypoint @ x=-4, y=-1, exit angle=45 degrees
+Waypoint p2 = { .5, .5, d2r(0) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
+Waypoint p3 = {  1, 1, d2r(0) };             // Waypoint @ x= 2, y= 4, exit angle= 0 radians
 points[0] = p1;
 points[1] = p2;
 points[2] = p3;
@@ -69,16 +69,14 @@ void AutoMovement::TestDrive()
     frc::Timer m_timer;
     m_timer.Start();
     l = 0; r = 0;
-    leftencoder->SetPositionConversionFactor(42);
-    rightencoder->SetPositionConversionFactor(42);
     leftencoder->SetPosition(0);
     rightencoder->SetPosition(0);
     std::cout << "l0 is: " << l << std::endl;
     std::cout << "r is: " << r << std::endl;
     std::cout << "44 " << leftencoder->GetPosition() << std::endl;
     std::cout << "44 " << rightencoder->GetPosition() << std::endl;
-    EncoderConfig leftconfig = { (int)leftencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
-    EncoderConfig rightconfig = { (int)rightencoder->GetPosition(), 42, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    EncoderConfig leftconfig = { leftencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    EncoderConfig rightconfig = { rightencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
     while (true){
     l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
     r = pathfinder_follow_encoder(rightconfig, rightfollower, &rightTrajectory, length, rightencoder->GetPosition());
