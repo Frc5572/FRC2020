@@ -22,7 +22,7 @@ class Shooter{
     void Calucate();
     void TestRPM();
     void Test();
-
+    void AutoPID();
     void RunPID();
     void InitPID();
 
@@ -32,7 +32,7 @@ class Shooter{
     // void BumberShot();
     // void InitShot();
     // void TrenchShot();
-
+    int AutoSelection = 0;
     bool Tracked = true, hood = false;
     double Power = 0, Distance = 0, rpm = 0, leftRPM = 0, rightRPM = 0;
 

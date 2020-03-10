@@ -137,23 +137,23 @@ void DriveTrain::Aim(){
         {
             if (disX > 10)
             {
-                R = -.25;  
-                L = -.25;
+                R = -.15;  
+                L = -.15;
             }
             if (disX < 10)
             {
-                R = -disX/40; 
-                L = -disX/40;
+                R = -disX/43; 
+                L = -disX/43;
             } 
             if (disX < -10)
             {
-                R = .25;
-                L = .25;
+                R = .15;
+                L = .15;
             }
             if (disX > -10)
             {
-                R = disX/40; 
-                L = disX/40;
+                R = disX/43; 
+                L = disX/43;
             }
         }
     else{
