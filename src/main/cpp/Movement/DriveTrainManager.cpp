@@ -92,6 +92,7 @@ DriveTrain::~DriveTrain()
 
 void DriveTrain::Drive()
 {
+    DriveTrain::Aim();
     if(this->Driver->L().second > .2 || this->Driver->L().second < -.2){
         LeftMotors->Set(-1 * Driver->L().second * .7  );
     }
@@ -119,7 +120,7 @@ void DriveTrain::LowerAmps(){
 }
 
 void DriveTrain::Aim(){
-    if (Driver->Y() ==  true)
+    if (Driver->X() ==  true)
     {
         disX = LimeLight->disX; 
         nt::NetworkTableInstance::GetDefault().GetTable("limelight")->PutNumber("camMode", 0);
@@ -136,23 +137,23 @@ void DriveTrain::Aim(){
         {
             if (disX > 10)
             {
-                R = -.3;  
-                L = -.3;
+                R = -.25;  
+                L = -.25;
             }
             if (disX < 10)
             {
-                R = -disX/35; 
-                L = -disX/35;
+                R = -disX/40; 
+                L = -disX/40;
             } 
             if (disX < -10)
             {
-                R = .3;
-                L = .3;
+                R = .25;
+                L = .25;
             }
             if (disX > -10)
             {
-                R = disX/35; 
-                L = disX/35;
+                R = disX/40; 
+                L = disX/40;
             }
         }
     else{

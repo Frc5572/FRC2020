@@ -61,15 +61,15 @@ void Shooter::RunPID()
         }
 
     if(this->Operator->POV() == 0 ){
-        SetPoint = 3451;
+        SetPoint = 2510;
         Hood->Set(frc::DoubleSolenoid::Value::kReverse);    
     }
     else if(this->Operator->POV() == 90){
-        SetPoint = 4575;
+        SetPoint = 3200; //3375
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){
-        SetPoint = 5400;
+        SetPoint = 3500;
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else{
@@ -81,6 +81,15 @@ void Shooter::RunPID()
 
      frc::SmartDashboard::PutNumber("SetPoint", SetPoint);
     frc::SmartDashboard::PutNumber("ProcessVariable", leftMotorEncoder->GetVelocity());
+
+    
+    leftRPM = leftMotorEncoder->GetVelocity();
+    rightRPM = rightMotorEncoder->GetVelocity();
+    rpm = ((leftRPM + rightRPM) / 2);
+
+    frc::SmartDashboard::PutNumber("RPM", rpm );
+    frc::SmartDashboard::PutNumber("Left RPM", leftRPM);
+    frc::SmartDashboard::PutNumber("Right RPM", rightRPM);
 
     }
 
@@ -142,7 +151,7 @@ void Shooter::TestRPM(){
         Hood->Set(frc::DoubleSolenoid::Value::kReverse);    
     }
     else if(this->Operator->POV() == 90){
-        shooterMotors->Set(.87);
+        shooterMotors->Set(.85);
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){
@@ -159,15 +168,15 @@ void Shooter::TestRPM(){
 void Shooter::Shots(){
 
     if(this->Operator->POV() == 0 ){
-        shooterMotors->Set(.65);
+        shooterMotors->Set(.47);
         Hood->Set(frc::DoubleSolenoid::Value::kReverse);    
     }
     else if(this->Operator->POV() == 90){
-        shooterMotors->Set(.87);
+        shooterMotors->Set(.63);
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){
-        shooterMotors->Set(.95); //small adjustment from .92 to .94
+        shooterMotors->Set(.70); //small adjustment from .92 to .94
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else{
