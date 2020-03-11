@@ -27,7 +27,7 @@ std::cout << "line 18" << std::endl;
 // Max Velocity:        15 m/s
 // Max Acceleration:    10 m/s/s
 // Max Jerk:            60 m/s/s/s
-pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.05, 1.5, 9.0, 10.0, &candidate);
+pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.001, 2.0, 2.0, 2.0, &candidate);
 std::cout << "line 31" << std::endl;
 length = candidate.length;
 
@@ -48,8 +48,10 @@ double wheelbase_width = 0.559;
 pathfinder_modify_tank(trajectory, length, leftTrajectory, rightTrajectory, wheelbase_width);
 std::cout << "line 49" << std::endl;
 
-// leftfollower->last_error = 0; leftfollower->segment = 0; leftfollower->finished = 0;     // Just in case!
-// rightfollower->last_error = 0; rightfollower->segment = 0; rightfollower->finished = 0;     // Just in case!
+leftfollower = new EncoderFollower{0.0, 0.0, 0.0, 0, 0};
+rightfollower = new EncoderFollower{0.0, 0.0, 0.0, 0, 0};
+// leftfollower->last_error = 0.0; leftfollower->segment = 0; leftfollower->finished = 0;     // Just in case!
+// rightfollower->last_error = 0.0; rightfollower->segment = 0; rightfollower->finished = 0;     // Just in case!
 std::cout << "line 53" << std::endl;
 
 this->leftMotors = &leftMotors;
@@ -74,8 +76,8 @@ void AutoMovement::TestDrive()
     std::cout << "r is: " << r << std::endl;
     std::cout << "44 " << leftencoder->GetPosition() << std::endl;
     std::cout << "44 " << rightencoder->GetPosition() << std::endl;
-    EncoderConfig leftconfig = { leftencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
-    EncoderConfig rightconfig = { rightencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    EncoderConfig leftconfig = { leftencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, (1.0 / max_velocity), 0.0};  
+    EncoderConfig rightconfig = { rightencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, (1.0 / max_velocity), 0.0};  
     std::cout << "I am here too" << std::endl;
     while (true){
     l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
