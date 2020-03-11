@@ -34,7 +34,7 @@ void Shooter::InitPID(){
     frc::SmartDashboard::PutNumber("Feed Forward", kFF);
     frc::SmartDashboard::PutNumber("Max Output", kMaxOutput);
     frc::SmartDashboard::PutNumber("Min Output", kMinOutput);
-
+    frc::SmartDashboard::PutNumber("SetPoint", SP);
     frc::SmartDashboard::PutNumber("Auto Selection", AutoSelection);
 }
 void Shooter::AutoPID()
@@ -46,7 +46,7 @@ void Shooter::AutoPID()
     double ff = frc::SmartDashboard::GetNumber("Feed Forward", 0);
     double max = frc::SmartDashboard::GetNumber("Max Output", 0);
     double min = frc::SmartDashboard::GetNumber("Min Output", 0);
-    double SetPoint = frc::SmartDashboard::GetNumber("Set RPMS", 0);
+    double SetPoint = frc::SmartDashboard::GetNumber("SetPoint", 0);
     double Auto = frc::SmartDashboard::GetNumber("Auto Selection", 0);
         
         // if PID coefficients on SmartDashboard have changed, write new values to controller
@@ -95,7 +95,7 @@ void Shooter::RunPID()
     double ff = frc::SmartDashboard::GetNumber("Feed Forward", 0);
     double max = frc::SmartDashboard::GetNumber("Max Output", 0);
     double min = frc::SmartDashboard::GetNumber("Min Output", 0);
-    double SetPoint = frc::SmartDashboard::GetNumber("Set RPMS", 0);
+    double SetPoint = frc::SmartDashboard::GetNumber("SetPoint", 0);
         
         // if PID coefficients on SmartDashboard have changed, write new values to controller
         if((p != kP)) { m_pidController->SetP(p); m_pidController2->SetP(p); kP = p; }
@@ -109,24 +109,24 @@ void Shooter::RunPID()
         }
 
     if(this->Operator->POV() == 0 ){ //bumber
-        SetPoint = 2500;
+        //SetPoint = 2500;
         Hood->Set(frc::DoubleSolenoid::Value::kReverse);    
     }
     else if(this->Operator->POV() == 90){ //init
-        SetPoint = 2700; //3375
+        //SetPoint = 2700; //3375
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){ //trench
-        SetPoint = 2700;
+        //SetPoint = 2700;
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if (Operator->POV() == 180) //colorwheel
     {
-        SetPoint = 4500;
+        //SetPoint = 4500;
         Hood->Set(frc::DoubleSolenoid::Value::kForward);
     }
     else{
-        SetPoint = 0;
+        //SetPoint = 0;
         Hood->Set(frc::DoubleSolenoid::Value::kReverse); 
     }
 
