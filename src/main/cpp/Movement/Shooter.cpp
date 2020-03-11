@@ -109,21 +109,21 @@ void Shooter::RunPID()
         kMinOutput = min; kMaxOutput = max; 
         }
 
-    if(this->Operator->POV() == 0 ){
-        SetPoint = 2510;
+    if(this->Operator->POV() == 0 ){ //bumber
+        SetPoint = 2500;
         Hood->Set(frc::DoubleSolenoid::Value::kReverse);    
     }
-    else if(this->Operator->POV() == 90){
+    else if(this->Operator->POV() == 90){ //init
         SetPoint = 2700; //3375
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
-    else if(this->Operator->POV() == 270){
-        SetPoint = 3500;
+    else if(this->Operator->POV() == 270){ //trench
+        SetPoint = 2700;
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
-    else if (Operator->POV() == 180)
+    else if (Operator->POV() == 180) //colorwheel
     {
-        SetPoint = 4000;
+        SetPoint = 4500;
         Hood->Set(frc::DoubleSolenoid::Value::kForward);
     }
     else{
@@ -209,7 +209,7 @@ void Shooter::TestRPM(){
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){
-        shooterMotors->Set(.95); //small adjustment from .92 to .94
+        shooterMotors->Set(.90); //small adjustment from .92 to .94
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else{
@@ -226,7 +226,7 @@ void Shooter::Shots(){
         Hood->Set(frc::DoubleSolenoid::Value::kReverse);    
     }
     else if(this->Operator->POV() == 90){
-        shooterMotors->Set(.72);
+        shooterMotors->Set(.6);
         Hood->Set(frc::DoubleSolenoid::Value::kForward); 
     }
     else if(this->Operator->POV() == 270){
@@ -235,7 +235,7 @@ void Shooter::Shots(){
     }
     else if (Operator->POV() == 180)
     {
-        shooterMotors->Set(.78);
+        shooterMotors->Set(.85);
         Hood->Set(frc::DoubleSolenoid::Value::kForward);
     }
     else{
