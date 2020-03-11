@@ -76,6 +76,7 @@ void AutoMovement::TestDrive()
     std::cout << "44 " << rightencoder->GetPosition() << std::endl;
     EncoderConfig leftconfig = { leftencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
     EncoderConfig rightconfig = { rightencoder->GetPosition(), 10.5, wheel_circumference, 1.0, 0.0, 0.0, 1.0 / max_velocity, 0.0};  
+    std::cout << "I am here too" << std::endl;
     while (true){
     l = pathfinder_follow_encoder(leftconfig, leftfollower, &leftTrajectory, length, leftencoder->GetPosition());
     r = pathfinder_follow_encoder(rightconfig, rightfollower, &rightTrajectory, length, rightencoder->GetPosition());
