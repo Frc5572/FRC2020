@@ -63,9 +63,13 @@ void Shooter::AutoPID()
     if (Auto == 0)
     {
         SetPoint = 2700; //3375
-        Hood->Set(frc::DoubleSolenoid::Value::kForward);
+        SP = SetPoint;
         shooterMotors->Set(.72); 
-        
+        Hood->Set(frc::DoubleSolenoid::Value::kForward);
+        m_pidController->SetReference(SetPoint, rev::ControlType::kVelocity);
+        leftRPM = leftMotorEncoder->GetVelocity();
+        rightRPM = rightMotorEncoder->GetVelocity();
+        rpm = ((leftRPM + rightRPM) / 2);   
     }
 
     else
@@ -74,15 +78,9 @@ void Shooter::AutoPID()
     }
     
          
-    m_pidController->SetReference(SetPoint, rev::ControlType::kVelocity);
 
     frc::SmartDashboard::PutNumber("SetPoint", SetPoint);
     frc::SmartDashboard::PutNumber("ProcessVariable", leftMotorEncoder->GetVelocity());
-
-    
-    leftRPM = leftMotorEncoder->GetVelocity();
-    rightRPM = rightMotorEncoder->GetVelocity();
-    rpm = ((leftRPM + rightRPM) / 2);
 
     frc::SmartDashboard::PutNumber("RPM", rpm );
     frc::SmartDashboard::PutNumber("Left RPM", leftRPM);
@@ -135,7 +133,7 @@ void Shooter::RunPID()
 
      m_pidController->SetReference(SetPoint, rev::ControlType::kVelocity);
 
-     frc::SmartDashboard::PutNumber("SetPoint", SetPoint);
+    frc::SmartDashboard::PutNumber("SetPoint", SetPoint);
     frc::SmartDashboard::PutNumber("ProcessVariable", leftMotorEncoder->GetVelocity());
 
     

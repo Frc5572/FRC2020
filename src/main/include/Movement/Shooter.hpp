@@ -34,7 +34,7 @@ class Shooter{
     // void TrenchShot();
     int AutoSelection = 0;
     bool Tracked = true, hood = false;
-    double Power = 0, Distance = 0, rpm = 0, leftRPM = 0, rightRPM = 0;
+    double Power = 0, Distance = 0, rpm = 0, leftRPM = 0, rightRPM = 0, SP = 0;
 
     // PID coefficients
     double kP = 0.1, kI = 1e-4, kD = 1, kIz = 0, kFF = 0, kMaxOutput = 1, kMinOutput = 0;
