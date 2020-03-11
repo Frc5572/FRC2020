@@ -33,43 +33,18 @@ void Robot::AutonomousPeriodic() {
     // automovement->TestDrive();
     // continue;
     // }
-    // while(m_timer.Get() < 6){
-    //     shooter.AutoPID();
-    //     //intake.Set(frc::DoubleSolenoid::Value::kForward);
-    //     if (shooter.rpm >= shooter.SP)
-    //     {
-    //         m_hopper.Set(.3);
-    //     }
-    // }
-    // while(m_timer.Get() > 6 && m_timer.Get() < 11){
-    //     //intake.Set(frc::DoubleSolenoid::Value::kReverse);
-    //     shooterHood.Set(frc::DoubleSolenoid::Value::kReverse);
-    //     m_leftShooter.Set(0);
-    //     m_rightShooter.Set(0);
-    //     m_hopper.Set(0.0);
-    // }
-    // while(m_timer.Get() > 11 && m_timer.Get() < 12)
-    // {
-    //     m_rightBottomMotor.Set(.3);
-    //     m_rightMiddleMotor.Set(.3);
-
-    //     m_leftBottomMotor.Set(-.3);
-    //     m_leftMiddleMotor.Set(-.3);
-    // }
-    //dripping springs auto fixed below
-    while(m_timer.Get() < 2){
-        m_leftShooter.Set(.7);
-        m_rightShooter.Set(.7);
-    }
-    while(m_timer.Get() < 10 & m_timer.Get() > 2){
-        shooterHood.Set(frc::DoubleSolenoid::Value::kForward);
+    while(m_timer.Get() < 6){
+        shooter.AutoPID();
+        m_leftShooter.Set(.72); 
+        m_rightShooter.Set(.72); 
         //intake.Set(frc::DoubleSolenoid::Value::kForward);
-        m_leftShooter.Set(.7);
-        m_rightShooter.Set(.7);
-        m_hopper.Set(.3);
+        if (shooter.rpm >= shooter.SP)
+        {
+            m_hopper.Set(.3);
+        }
         continue;
     }
-    while(m_timer.Get() > 10 && m_timer.Get() < 11){
+    while(m_timer.Get() > 6 && m_timer.Get() < 11){
         //intake.Set(frc::DoubleSolenoid::Value::kReverse);
         shooterHood.Set(frc::DoubleSolenoid::Value::kReverse);
         m_leftShooter.Set(0);
@@ -77,22 +52,57 @@ void Robot::AutonomousPeriodic() {
         m_hopper.Set(0.0);
         continue;
     }
-
-    while(m_timer.Get() > 11 && m_timer.Get() < 11.5){
+    while(m_timer.Get() > 11 && m_timer.Get() < 12)
+    {
         m_rightBottomMotor.Set(.3);
         m_rightMiddleMotor.Set(.3);
 
         m_leftBottomMotor.Set(-.3);
         m_leftMiddleMotor.Set(-.3);
         continue;
-    } 
-        m_rightBottomMotor.Set(0);
-        m_rightMiddleMotor.Set(0);
+    }
+    m_rightBottomMotor.Set(0);
+    m_rightMiddleMotor.Set(0);
 
-        m_leftBottomMotor.Set(0);
-        m_leftMiddleMotor.Set(0);
+    m_leftBottomMotor.Set(0);
+    m_leftMiddleMotor.Set(0);
+    //dripping springs auto fixed below
+//     while(m_timer.Get() < 2){
+//         m_leftShooter.Set(.7);
+//         m_rightShooter.Set(.7);
+//     }
+//     while(m_timer.Get() < 10 & m_timer.Get() > 2){
+//         shooterHood.Set(frc::DoubleSolenoid::Value::kForward);
+//         //intake.Set(frc::DoubleSolenoid::Value::kForward);
+//         m_leftShooter.Set(.7);
+//         m_rightShooter.Set(.7);
+//         m_hopper.Set(.3);
+//         continue;
+//     }
+//     while(m_timer.Get() > 10 && m_timer.Get() < 11){
+//         //intake.Set(frc::DoubleSolenoid::Value::kReverse);
+//         shooterHood.Set(frc::DoubleSolenoid::Value::kReverse);
+//         m_leftShooter.Set(0);
+//         m_rightShooter.Set(0);
+//         m_hopper.Set(0.0);
+//         continue;
+//     }
+
+//     while(m_timer.Get() > 11 && m_timer.Get() < 11.5){
+//         m_rightBottomMotor.Set(.3);
+//         m_rightMiddleMotor.Set(.3);
+
+//         m_leftBottomMotor.Set(-.3);
+//         m_leftMiddleMotor.Set(-.3);
+//         continue;
+//     } 
+//         m_rightBottomMotor.Set(0);
+//         m_rightMiddleMotor.Set(0);
+
+//         m_leftBottomMotor.Set(0);
+//         m_leftMiddleMotor.Set(0);
+// }
 }
-
 void Robot::TeleopInit(){
     shooter.InitPID();
 }

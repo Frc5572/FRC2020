@@ -64,7 +64,6 @@ void Shooter::AutoPID()
     {
         SetPoint = 2700; //3375
         SP = SetPoint;
-        shooterMotors->Set(.72); 
         Hood->Set(frc::DoubleSolenoid::Value::kForward);
         m_pidController->SetReference(SetPoint, rev::ControlType::kVelocity);
         leftRPM = leftMotorEncoder->GetVelocity();
