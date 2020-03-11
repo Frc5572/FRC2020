@@ -33,19 +33,24 @@ void Robot::AutonomousPeriodic() {
     // automovement->TestDrive();
     // continue;
     // }
-    while(m_timer.Get() < 6){
-        shooter.AutoPID();
-        m_leftShooter.Set(.72); 
-        m_rightShooter.Set(.72); 
-        //intake.Set(frc::DoubleSolenoid::Value::kForward);
-        if (shooter.rpm >= shooter.SP)
-        {
-            m_hopper.Set(.3);
-        }
+    
+    
+    while(m_timer.Get() < 3 ){
+        //shooter.AutoPID();
+        m_leftShooter.Set(.6); 
+        m_rightShooter.Set(.6); 
+        shooterHood.Set(frc::DoubleSolenoid::Value::kForward);
+        //m_hopper.Set(.3);
         continue;
     }
-    while(m_timer.Get() > 6 && m_timer.Get() < 11){
-        //intake.Set(frc::DoubleSolenoid::Value::kReverse);
+
+    while(m_timer.Get() > 3 && m_timer.Get() < 10 ){
+        m_hopper.Set(.3);
+        m_leftShooter.Set(.6); 
+        m_rightShooter.Set(.6); 
+        shooterHood.Set(frc::DoubleSolenoid::Value::kForward);
+    }
+    while(m_timer.Get() > 10 && m_timer.Get() < 11){ 
         shooterHood.Set(frc::DoubleSolenoid::Value::kReverse);
         m_leftShooter.Set(0);
         m_rightShooter.Set(0);
@@ -66,7 +71,11 @@ void Robot::AutonomousPeriodic() {
 
     m_leftBottomMotor.Set(0);
     m_leftMiddleMotor.Set(0);
-    //dripping springs auto fixed below
+
+
+
+
+//     //dripping springs auto fixed below
 //     while(m_timer.Get() < 2){
 //         m_leftShooter.Set(.7);
 //         m_rightShooter.Set(.7);
@@ -101,16 +110,15 @@ void Robot::AutonomousPeriodic() {
 
 //         m_leftBottomMotor.Set(0);
 //         m_leftMiddleMotor.Set(0);
-// }
+
 }
+
 void Robot::TeleopInit(){
     shooter.InitPID();
 }
 
 void Robot::TeleopPeriodic(){
      LimeLight.Update();
-
-    //driveTrain.Aim();
 
     shooter.RunPID();
 
