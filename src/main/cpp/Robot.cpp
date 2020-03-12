@@ -36,7 +36,7 @@ void Robot::RobotPeriodic(){
 void Robot::AutonomousInit()     {
      m_timer.Reset();
      m_timer.Start();
-
+    driveTrain.RightMotors->SetInverted(true);
     automovement = new AutoMovement{*driveTrain.LeftMotors, *driveTrain.RightMotors, ahrs, *BottomLeftMotorEncoder, *BottomRightMotorEncoder};
 }
 void Robot::AutonomousPeriodic() { 

@@ -8,8 +8,8 @@ POINT_LENGTH = 3;
 Waypoint *points = new Waypoint[POINT_LENGTH];
 
 Waypoint p1 = { 0, 0, d2r(0) };      // Waypoint @ x=-4, y=-1, exit angle=45 degrees
-Waypoint p2 = { .5, .5, d2r(0) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
-Waypoint p3 = {  1, 1, d2r(0) };             // Waypoint @ x= 2, y= 4, exit angle= 0 radians
+Waypoint p2 = { .5, 0, d2r(0) };             // Waypoint @ x=-1, y= 2, exit angle= 0 radians
+Waypoint p3 = {  1, 0, d2r(0) };             // Waypoint @ x= 2, y= 4, exit angle= 0 radians
 points[0] = p1;
 points[1] = p2;
 points[2] = p3;
@@ -27,7 +27,7 @@ std::cout << "line 18" << std::endl;
 // Max Velocity:        15 m/s
 // Max Acceleration:    10 m/s/s
 // Max Jerk:            60 m/s/s/s
-pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_FAST, 0.001, 2.0, 2.0, 2.0, &candidate);
+pathfinder_prepare(points, POINT_LENGTH, FIT_HERMITE_CUBIC, PATHFINDER_SAMPLES_LOW, 0.0008, 1.0, 1.0, 2.0, &candidate); //0.0005, 1.5 v, 2.0 a, 4.0 j
 std::cout << "line 31" << std::endl;
 length = candidate.length;
 
@@ -60,7 +60,7 @@ this->gyro = &gyro;
 this->leftencoder = &anyleftencoder;
 this->rightencoder = &anyrightencoder;
 AutoMovement::gyro->ZeroYaw();
-max_velocity = 1.5;
+max_velocity = 2.5;
 wheel_circumference = .47877887204060999;
 std::cout << "line 65" << std::endl;
 }
@@ -72,6 +72,7 @@ void AutoMovement::TestDrive()
     l = 0; r = 0;
     leftencoder->SetPosition(0);
     rightencoder->SetPosition(0);
+    gyro->ZeroYaw();
     std::cout << "l0 is: " << l << std::endl;
     std::cout << "r is: " << r << std::endl;
     std::cout << "44 " << leftencoder->GetPosition() << std::endl;
@@ -85,6 +86,7 @@ void AutoMovement::TestDrive()
     std::cout << "l1 is: " << l << std::endl;
     std::cout << "r is: " << r << std::endl;
     angle = gyro->GetAngle();
+    std::cout << angle << std::endl;
     double desired_heading = leftfollower->heading;
     double differeince_angle = desired_heading - angle;
     std::cout << "l2 is: " << l << std::endl;
@@ -98,8 +100,9 @@ void AutoMovement::TestDrive()
     double turn = 0.8 * (-1.0/80.0) * differeince_angle;
     std::cout << "l3 is: " << l << std::endl;
     std::cout << "r is: " << r << std::endl;
-    leftMotors->Set((l + turn));
-    rightMotors->Set(-(r - turn));
+    std::cout << turn << std::endl;
+    leftMotors->Set(l + turn);
+    rightMotors->Set(r - turn);
     if (m_timer.Get() > 15)
     {
         break;
